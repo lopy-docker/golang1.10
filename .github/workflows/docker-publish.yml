@@ -12,25 +12,25 @@ on:
 
 env:
   # TODO: Change variable to your image's name.
-  IMAGE_NAME: "lopy-docker/golang1.10"
+  IMAGE_NAME: "golang1.10"
 
 jobs:
   # Run tests.
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
-  test:
-    runs-on: windows-latest
+  # test:
+  #   runs-on: windows-latest
 
-    steps:
-      - uses: actions/checkout@v2
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - name: Run tests
-        run: docker build . --file Dockerfile
+  #     - name: Run tests
+  #       run: docker build . --file Dockerfile
 
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
   push:
     # Ensure test job passes before pushing image.
-    needs: test
+    # needs: test
 
     runs-on: windows-latest
     if: github.event_name == 'push'
@@ -50,3 +50,4 @@ jobs:
 
           docker tag $env:IMAGE_NAME  ("{0}:{1}" -f $IMAGE_ID , "latest" )
           docker push ("{0}:{1}" -f $IMAGE_ID , "latest" )
+      
