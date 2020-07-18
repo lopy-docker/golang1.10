@@ -46,7 +46,7 @@ jobs:
 
       - name: Push image
         run: |
-          $IMAGE_ID=('docker.pkg.github.com/${{ github.repository }}/{0}'$env:IMAGE_NAME)
+          $IMAGE_ID=('docker.pkg.github.com/${{ github.repository }}/{0}' -f $env:IMAGE_NAME)
 
           docker tag $env:IMAGE_NAME  ("{0}:{1}" -f $IMAGE_ID , "latest" )
           docker push ("{0}:{1}" -f $IMAGE_ID , "latest" )
