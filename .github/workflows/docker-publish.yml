@@ -12,7 +12,7 @@ on:
 
 env:
   # TODO: Change variable to your image's name.
-  IMAGE_NAME: "golang1.10"
+  IMAGE_NAME: "lopydev/golang1.10"
 
 jobs:
   # Run tests.
@@ -50,44 +50,63 @@ jobs:
 
   #         docker tag $env:IMAGE_NAME  ("{0}:{1}" -f $IMAGE_ID , "latest" )
   #         docker push ("{0}:{1}" -f $IMAGE_ID , "latest" )
+    push3:
+      # Ensure test job passes before pushing image.
+      # needs: test
+
+      runs-on: windows-latest
+      if: github.event_name == 'push'
+
+      steps:
+        - uses: actions/checkout@v2
+
+        - name: Build image
+          run: docker build . --file .\Dockerfile --tag $env:IMAGE_NAME
+
+        - name: Log into registry
+          run: echo "$env:DOCKER_TOKEN" | docker login -u $env:DOCKER_USERNAME --password-stdin
+
+        - name: Push image
+          run: |
+            docker push ("{0}:{1}" -f $env:IMAGE_NAME , "latest" )
       
-  push2:
-    # needs: test
-    runs-on: windows-latest
-    if: github.event_name == 'push'
-    steps:
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v1.1.0
-        with:
-          # Username used to log in to a Docker registry. If not set then no login will occur
-          username: $env:DOCKER_USERNAME
-          # Password or personal access token used to log in to a Docker registry. If not set then no login will occur
-          password: $env:DOCKER_TOKEN
-          # Server address of Docker registry. If not set then will default to Docker Hub
-          # registry: # optional
-          # Docker repository to tag the image with
-          repository: lopydev/golang1.10
-          # Comma-delimited list of tags. These will be added to the registry/repository to form the image's tags
-          tags: latest
-          # Automatically tags the built image with the git reference as per the readme
-          #tag_with_ref: # optional
-          # Automatically tags the built image with the git short SHA as per the readme
-          #tag_with_sha: # optional
-          # Path to the build context
-          #path: # optional, default is .
-          # Path to the Dockerfile (Default is '{path}/Dockerfile')
-          #dockerfile: # optional
-          # Sets the target stage to build
-          #target: # optional
-          # Always attempt to pull a newer version of the image
-          #always_pull: # optional
-          # Comma-delimited list of build-time variables
-          #build_args: # optional
-          # Comma-delimited list of images to consider as cache sources
-          #cache_froms: # optional
-          # Comma-delimited list of labels to add to the built image
-          #labels: # optional
-          # Adds labels with git repository information to the built image
-          #add_git_labels: # optional
-          # Whether to push the image
-          #push: # optional, default is true
+  # push2:
+  #   # needs: test
+  #   runs-on: windows-latest
+  #   if: github.event_name == 'push'
+  #   steps:
+  #     - name: Build and push Docker images
+  #       uses: docker/build-push-action@v1.1.0
+  #       with:
+  #         # Username used to log in to a Docker registry. If not set then no login will occur
+  #         username: $env:DOCKER_USERNAME
+  #         # Password or personal access token used to log in to a Docker registry. If not set then no login will occur
+  #         password: $env:DOCKER_TOKEN
+  #         # Server address of Docker registry. If not set then will default to Docker Hub
+  #         # registry: # optional
+  #         # Docker repository to tag the image with
+  #         repository: lopydev/golang1.10
+  #         # Comma-delimited list of tags. These will be added to the registry/repository to form the image's tags
+  #         tags: latest
+  #         # Automatically tags the built image with the git reference as per the readme
+  #         #tag_with_ref: # optional
+  #         # Automatically tags the built image with the git short SHA as per the readme
+  #         #tag_with_sha: # optional
+  #         # Path to the build context
+  #         #path: # optional, default is .
+  #         # Path to the Dockerfile (Default is '{path}/Dockerfile')
+  #         #dockerfile: # optional
+  #         # Sets the target stage to build
+  #         #target: # optional
+  #         # Always attempt to pull a newer version of the image
+  #         #always_pull: # optional
+  #         # Comma-delimited list of build-time variables
+  #         #build_args: # optional
+  #         # Comma-delimited list of images to consider as cache sources
+  #         #cache_froms: # optional
+  #         # Comma-delimited list of labels to add to the built image
+  #         #labels: # optional
+  #         # Adds labels with git repository information to the built image
+  #         #add_git_labels: # optional
+  #         # Whether to push the image
+  #         #push: # optional, default is true
