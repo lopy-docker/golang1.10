@@ -60,12 +60,6 @@ jobs:
       steps:
         - uses: actions/checkout@v2
 
-        - name: aha
-          run: echo "${{ secrets.DOCKER_USERNAME }}"
-
-        - name: aha2
-          run: echo "${{ secrets.HEHE }}"
-
         - name: Log into registry
           run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 

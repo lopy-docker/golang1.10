@@ -68,6 +68,9 @@ RUN $url = ('https://golang.org/dl/go{0}.windows-amd64.zip' -f $env:GOLANG_VERSI
 	Write-Host 'Verifying install ("go version") ...'; \
 	go version; \
 	\
+	Write-Host 'go install godep' \
+	go get -u github.com/tools/godep \
+	\
 	Write-Host 'Complete.';
 
 WORKDIR $GOPATH
