@@ -61,10 +61,13 @@ jobs:
         - uses: actions/checkout@v2
 
         - name: aha
-          run: echo "${{ github.DOCKER_USERNAME }}"
+          run: echo "${{ secrets.DOCKER_USERNAME }}"
+
+        - name: aha2
+          run: echo "${{ secrets.HEHE }}"
 
         - name: Log into registry
-          run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ github.DOCKER_USERNAME }} --password-stdin
+          run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
         - name: Build image
           run: docker build . --file .\Dockerfile --tag $env:IMAGE_NAME
