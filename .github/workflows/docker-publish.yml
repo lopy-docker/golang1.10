@@ -60,6 +60,9 @@ jobs:
       steps:
         - uses: actions/checkout@v2
 
+        - name: aha
+          run: echo "$env:DOCKER_USERNAME"
+          
         - name: Log into registry
           run: echo "$env:DOCKER_TOKEN" | winpty docker login -u $env:DOCKER_USERNAME
 
