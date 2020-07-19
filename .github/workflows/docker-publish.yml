@@ -61,7 +61,7 @@ jobs:
         - uses: actions/checkout@v2
 
         - name: Log into registry
-          run: winpty docker login -u $env:DOCKER_USERNAME -p "$env:DOCKER_TOKEN"
+          run: echo "$env:DOCKER_TOKEN" | winpty docker login -u $env:DOCKER_USERNAME
 
         - name: Build image
           run: docker build . --file .\Dockerfile --tag $env:IMAGE_NAME
