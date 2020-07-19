@@ -60,11 +60,11 @@ jobs:
       steps:
         - uses: actions/checkout@v2
 
+        - name: Log into registry
+          run: echo "$env:DOCKER_TOKEN" | winpty docker login -u $env:DOCKER_USERNAME --password-stdin
+
         - name: Build image
           run: docker build . --file .\Dockerfile --tag $env:IMAGE_NAME
-
-        - name: Log into registry
-          run: echo "$env:DOCKER_TOKEN" | docker login -u $env:DOCKER_USERNAME --password-stdin
 
         - name: Push image
           run: |
