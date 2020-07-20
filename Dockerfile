@@ -75,7 +75,7 @@ RUN $url = ('https://golang.org/dl/go{0}.windows-amd64.zip' -f $env:GOLANG_VERSI
 
 RUN $urlTdm = ('https://github.com/jmeubank/tdm-gcc-src/releases/download/v9.2.0-tdm64-1/gcc-9.2.0-tdm64-1-ada.zip'); \
 	Write-Host ('Downloading {0} ...' -f $urlTdm); \
-	Invoke-WebRequest -Uri $url -OutFile 'tdm64.zip'; \
+	Invoke-WebRequest -Uri $urlTdm -OutFile 'tdm64.zip'; \
 	\
 	Write-Host 'Expanding ...'; \
 	Expand-Archive tdm64.zip -DestinationPath C:\tdmgcc\.; \
