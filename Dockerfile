@@ -29,7 +29,7 @@ RUN Write-Host ('Downloading {0} ...' -f $env:GIT_DOWNLOAD_URL); \
 	Remove-Item git.zip -Force; \
 	\
 	Write-Host 'Updating PATH ...'; \
-	$env:PATH = 'C:\git\cmd;C:\git\mingw64\bin;C:\git\usr\bin;C:\tdmgcc\bin' + $env:PATH; \
+	$env:PATH = 'C:\git\cmd;C:\git\mingw64\bin;C:\git\usr\bin;C:\tdmgcc\bin;' + $env:PATH; \
 	[Environment]::SetEnvironmentVariable('PATH', $env:PATH, [EnvironmentVariableTarget]::Machine); \
 	\
 	Write-Host 'Verifying install ("git version") ...'; \
