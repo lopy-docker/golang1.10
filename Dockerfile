@@ -89,7 +89,6 @@ RUN $urlTdm = ('https://github.com/jmeubank/tdm-gcc-src/releases/download/v9.2.0
 	\
 	Write-Host 'Run Gcc -v ...'; \
 	\
-	ls C:\tdmgcc\ ;\
-	gcc -v
+	ls C:\tdmgcc\ ;
 
 WORKDIR $GOPATH
